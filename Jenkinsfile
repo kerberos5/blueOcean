@@ -5,7 +5,7 @@ pipeline {
       agent any
       steps {
         echo 'get pods'
-        sh 'oc get pod -n smoke'
+        sh 'oc get pod -n smoke -o jsonpath=\'{.items[].spec.containers[].name}\''
       }
     }
 
