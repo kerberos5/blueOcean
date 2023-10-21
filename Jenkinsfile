@@ -1,20 +1,26 @@
 pipeline {
   agent any
   stages {
-    stage('getPod') {
+    stage('Create NS') {
       agent any
       steps {
-        echo 'get pods'
-        input(message: 'Get Deploy?', ok: 'Yes')
-        sh 'oc get pod -n smoke -o jsonpath=\'{.items[].spec.containers[].name}\''
+        echo 'Creating namespace'
+        sh 'jenkins/create-ns.sh'
       }
     }
 
-    stage('getSVC') {
+    stage('Deploy nginx') {
       agent any
       steps {
-        echo 'get svc'
-        sh 'oc get svc -n smoke'
+        echo 'Deployng nginx'
+        sh 'jenkins/deploy-ng.sh'
+      }
+    }
+
+    stage('Create route') {
+      steps {
+        echo 'Creating route for nginx'
+        sh 'jenkins/create-ro.sh'
       }
     }
 
