@@ -29,7 +29,7 @@ oc new-project test'''
     stage('Test') {
       steps {
         echo 'Testing'
-        sh 'curl -s --fail https://nginx-test.apps-crc.testing'
+        sh 'curl -s --fail nginx-test.apps-crc.testing'
       }
     }
 
