@@ -8,7 +8,7 @@ pipeline {
         sh '''
 
 
-chmod +x create-ns.sh &&  ./jenkins/create-ns.sh'''
+oc new-project test'''
       }
     }
 
@@ -16,14 +16,14 @@ chmod +x create-ns.sh &&  ./jenkins/create-ns.sh'''
       agent any
       steps {
         echo 'Deployng nginx'
-        sh './jenkins/deploy-ng.sh'
+        sh 'oc new-app --name nginx-test --image quay.io/redhattraining/hello-world-nginx:v1.0 -l app=nginx-test -n test'
       }
     }
 
     stage('Create route') {
       steps {
         echo 'Creating route for nginx'
-        sh './jenkins/create-ro.sh'
+        sh 'oc create route edge nginx-test --service nginx-test --hostname nginx-test.apps-crc.testing --port 8080 -n test'
       }
     }
 
