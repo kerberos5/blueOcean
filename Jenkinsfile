@@ -5,7 +5,7 @@ pipeline {
       agent any
       steps {
         echo 'Creating namespace'
-        sh 'jenkins/create-ns.sh'
+        sh './jenkins/create-ns.sh'
       }
     }
 
@@ -13,14 +13,14 @@ pipeline {
       agent any
       steps {
         echo 'Deployng nginx'
-        sh 'jenkins/deploy-ng.sh'
+        sh './jenkins/deploy-ng.sh'
       }
     }
 
     stage('Create route') {
       steps {
         echo 'Creating route for nginx'
-        sh 'jenkins/create-ro.sh'
+        sh './jenkins/create-ro.sh'
       }
     }
 
