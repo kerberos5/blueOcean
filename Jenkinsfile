@@ -36,7 +36,7 @@ oc delete project test'''
     stage('Test') {
       steps {
         echo 'Testing'
-        sh 'curl -s http://nginx-test.test.svc.cluster.local:8080'
+        sh 'oc get all -n test'
       }
     }
 
