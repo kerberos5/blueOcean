@@ -37,7 +37,7 @@ oc delete project test'''
       steps {
         echo 'Testing'
         sleep 60
-        sh 'oc get all -n test'
+        sh 'curl -s -k https://nginx-test.apps-crc.testing'
       }
     }
 
