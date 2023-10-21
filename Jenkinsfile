@@ -5,7 +5,10 @@ pipeline {
       agent any
       steps {
         echo 'Creating namespace'
-        sh './jenkins/create-ns.sh'
+        sh '''
+
+
+chmod +x create-ns.sh &&  ./jenkins/create-ns.sh'''
       }
     }
 
