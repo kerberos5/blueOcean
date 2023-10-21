@@ -29,7 +29,7 @@ oc new-project test'''
     stage('Test') {
       steps {
         echo 'Testing'
-        sh 'curl -svk https://nginx-test.apps-crc.testing'
+        sh 'curl -s --fail https://nginx-test.apps-crc.testing'
       }
     }
 
@@ -37,7 +37,7 @@ oc new-project test'''
       steps {
         echo 'Delete namespace'
         input(message: 'do you want to delete the namespace?', ok: 'Yes')
-        sh 'oc delete project -n test'
+        sh 'oc delete project  test'
       }
     }
 
