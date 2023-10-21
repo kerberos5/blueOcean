@@ -1,18 +1,25 @@
 pipeline {
   agent any
   stages {
-    stage('Create NS') {
+    stage('Delete project') {
       agent any
       steps {
-        echo 'Creating namespace'
+        echo 'Delete Project'
         sh '''
 
-oc new-project test'''
+oc delete project test'''
+      }
+    }
+
+    stage('Create project') {
+      agent any
+      steps {
+        echo 'Creating project'
+        sh 'oc new-project test'
       }
     }
 
     stage('Deploy nginx') {
-      agent any
       steps {
         echo 'Deployng nginx'
         sh 'oc new-app --name nginx-test --image quay.io/redhattraining/hello-world-nginx:v1.0 -l app=nginx-test -n test'
@@ -21,7 +28,7 @@ oc new-project test'''
 
     stage('Create route') {
       steps {
-        echo 'Creating route for nginx'
+        echo 'Creating route'
         sh 'oc create route edge nginx-test --service nginx-test --hostname nginx-test.apps-crc.testing --port 8080 -n test'
       }
     }
@@ -30,14 +37,6 @@ oc new-project test'''
       steps {
         echo 'Testing'
         sh 'curl -sk https://nginx-test.apps-crc.testing'
-      }
-    }
-
-    stage('Delete') {
-      steps {
-        echo 'Delete namespace'
-        input(message: 'do you want to delete the namespace?', ok: 'Yes')
-        sh 'oc delete project  test'
       }
     }
 
