@@ -36,6 +36,7 @@ oc delete project test'''
     stage('Test') {
       steps {
         echo 'Testing'
+        sleep 60
         sh 'oc get all -n test'
       }
     }
