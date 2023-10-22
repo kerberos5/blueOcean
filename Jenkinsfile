@@ -36,7 +36,7 @@ oc delete project test'''
     stage('Test') {
       steps {
         echo 'Testing'
-        sleep 60
+        sleep 30
         sh 'curl -s -k https://nginx-test.apps-crc.testing'
       }
     }
